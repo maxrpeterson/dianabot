@@ -45,7 +45,7 @@ var dianabot = function(message, cb) {
 				bot.sendMessage(message.channel, ":wave: " + prettyQueue());
 			}
 
-		} else if (message.text.indexOf("next") > -1 && (message.user === maxID || message.user === abnerID)) {
+		} else if (message.text.indexOf("next") > -1 && message.user === taID) {
 			// next student
 			var currentStudent = queue.shift();
 			if (currentStudent) {
@@ -54,9 +54,9 @@ var dianabot = function(message, cb) {
 
 		} else if (message.text.indexOf("help") > -1) {
 			// help message
-			bot.sendMessage(message.channel, "All commands work only when you specifically mention me. Type `queue me` or `q me` to queue yourself and `dianabot status` to check current queue. Type `remove me` to remove yourself.")
+			bot.sendMessage(message.channel, "All commands work only when you specifically mention me. Type `queue me` or `q me` to queue yourself and `status` to check current queue. Type `remove me` to remove yourself.")
 
-		} else if (message.text.indexOf("clear queue") > -1 && (message.user === maxID || message.user === abnerID)) {
+		} else if (message.text.indexOf("clear queue") > -1 && message.user === taID) {
 			queue = [];
 			bot.sendMessage(message.channel, "Queue cleared");
 
