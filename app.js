@@ -1,6 +1,7 @@
 var request = require("request");
 var slackbot = require("./slackbot-new");
 var xml2js = require('xml2js');
+var fs = require('fs');
 
 var xmlParser = new xml2js.Parser();
 
@@ -10,7 +11,18 @@ var bot = new slackbot(botKey);
 
 var taID = process.env.SLACK_USER_ID;
 
-var queue = [];
+var queue;
+
+function backup(queueArray) {
+	fs.writeFile('./db.json', JSON.stringify({queue: queueArray}));
+}
+
+try {
+	queue = JSON.parse(fs.readFileSync('./db.json', 'utf8')).queue;
+} catch(e) {
+	queue = [];
+	backup(queue);
+}
 
 var prettyQueue = function() {
 	var queueArray = queue.map(function(user) {
@@ -32,6 +44,7 @@ var dianabot = function(message, cb) {
 				bot.api("users.info", {user: message.user}, function(data) {
 					queue.push(data.user);
 					bot.sendMessage(message.channel, prettyQueue());
+					backup(queue);
 				});
 			} else {
 				bot.sendMessage(message.channel, "Already in queue. " + prettyQueue());
@@ -43,6 +56,7 @@ var dianabot = function(message, cb) {
 			if (userToRemove.length) {
 				queue.splice(queue.indexOf(userToRemove[0]), 1);
 				bot.sendMessage(message.channel, ":wave: " + prettyQueue());
+				backup(queue);
 			}
 
 		} else if (message.text.indexOf("next") > -1 && message.user === taID) {
@@ -50,6 +64,7 @@ var dianabot = function(message, cb) {
 			var currentStudent = queue.shift();
 			if (currentStudent) {
 				bot.sendMessage(message.channel, "Up now: <@" + currentStudent.id + "> -- " + prettyQueue());
+				backup(queue);
 			}
 
 		} else if (message.text.indexOf("help") > -1) {
@@ -59,6 +74,7 @@ var dianabot = function(message, cb) {
 		} else if (message.text.indexOf("clear queue") > -1 && message.user === taID) {
 			queue = [];
 			bot.sendMessage(message.channel, "Queue cleared");
+			backup(queue);
 
 		} else if (message.text.indexOf(":kylesmile:") > -1) {
 			request("http://api.forismatic.com/api/1.0/?method=getQuote&format=json&lang=en", function(err, response, body) {
