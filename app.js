@@ -95,7 +95,12 @@ var dianabot = function(message, cb) {
 						var lineQueried = lines.filter(function(line) {
 							return line.name[0].toLowerCase().indexOf(trainLineQuery) > -1;
 						});
-						var botMessage = (lineQueried[0].status[0] === "GOOD SERVICE") ? "Nope" : "Yep";
+						var botMessage;
+						if (lineQueried[0].status[0] === 'GOOD SERVICE') { // ? "Nope" : "Yep";
+							botMessage = Math.random() < 0.5 ? 'Nope' : 'Nah';
+						} else {
+							botMessage = 'Yep';
+						}
 						bot.sendMessage(message.channel, botMessage);
 					});
 				});
