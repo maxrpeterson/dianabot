@@ -1,4 +1,3 @@
-var slackbot = require("./slackbot-new");
 var fs = require('fs');
 
 var queue;
