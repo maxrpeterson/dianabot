@@ -20,14 +20,24 @@ var prettyQueue = function() {
 	return "Current queue is now: " + (queueArray.length ? queueArray.join(", ") : "empty");
 };
 module.exports = function(bot, taID) {
+
 	var dianabot = function(message, cb) {
 		// the if/else if statements are for commands that don't rely
 		// on the wording as much
+
+		// State Message checks
+		var statusMessage 		= message.text.indexOf("status") > -1;
+		var queueMeMessage 		= message.text.indexOf("queue me") > -1 || message.text.indexOf("q me") > -1;
+		var removeMeMessage 	= message.text.indexOf("remove me") > -1;
+		var nextMessage 			= message.text.indexOf("next") > -1 && message.user === taID;
+		var helpMessage 			= message.text.indexOf("help") > -1;
+		var clearQueueMessage = message.text.indexOf("clear queue") > -1 && message.user === taID;
+
 		if (message.type === "message" && message.text !== undefined && message.text.indexOf(bot.mention) > -1) {
-			if (message.text.indexOf("status") > -1) {
+			if (statusMessage) {
 				bot.sendMessage(message.channel, prettyQueue());
 
-			} else if (message.text.indexOf("queue me") > -1 || message.text.indexOf("q me") > -1) {
+			} else if (queueMeMessage) {
 				// adding a user to the queue
 				if (queue.filter(function(e) {return e.id === message.user}).length === 0) {
 					bot.api("users.info", {user: message.user}, function(data) {
@@ -39,7 +49,7 @@ module.exports = function(bot, taID) {
 					bot.sendMessage(message.channel, "Already in queue. " + prettyQueue());
 				}
 
-			} else if (message.text.indexOf("remove me") > -1) {
+			} else if (removeMeMessage) {
 				// removing a user
 				var userToRemove = queue.filter(function(user) {return user.id === message.user});
 				if (userToRemove.length) {
@@ -48,7 +58,7 @@ module.exports = function(bot, taID) {
 					backup(queue);
 				}
 
-			} else if (message.text.indexOf("next") > -1 && message.user === taID) {
+			} else if (nextMessage) {
 				// next student
 				var currentStudent = queue.shift();
 				if (currentStudent) {
@@ -56,11 +66,11 @@ module.exports = function(bot, taID) {
 					backup(queue);
 				}
 
-			} else if (message.text.indexOf("help") > -1) {
+			} else if (helpMessage) {
 				// help message
 				bot.sendMessage(message.channel, "All commands work only when you specifically mention me. Type `queue me` or `q me` to queue yourself and `status` to check current queue. Type `remove me` to remove yourself.")
 
-			} else if (message.text.indexOf("clear queue") > -1 && message.user === taID) {
+			} else if (clearQueueMessage) {
 				queue = [];
 				bot.sendMessage(message.channel, "Queue cleared");
 				backup(queue);
