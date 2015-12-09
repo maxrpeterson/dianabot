@@ -24,16 +24,15 @@ module.exports = function(bot, taID) {
 	var dianabot = function(message, cb) {
 		// the if/else if statements are for commands that don't rely
 		// on the wording as much
-
-		// State Message checks
-		var statusMessage 		= message.text.indexOf("status") > -1;
-		var queueMeMessage 		= message.text.indexOf("queue me") > -1 || message.text.indexOf("q me") > -1;
-		var removeMeMessage 	= message.text.indexOf("remove me") > -1;
-		var nextMessage 			= message.text.indexOf("next") > -1 && message.user === taID;
-		var helpMessage 			= message.text.indexOf("help") > -1;
-		var clearQueueMessage = message.text.indexOf("clear queue") > -1 && message.user === taID;
-
 		if (message.type === "message" && message.text !== undefined && message.text.indexOf(bot.mention) > -1) {
+			// State Message checks
+			var statusMessage 		= message.text.indexOf("status") > -1,
+					queueMeMessage 		= message.text.indexOf("queue me") > -1 || message.text.indexOf("q me") > -1,
+					removeMeMessage 	= message.text.indexOf("remove me") > -1,
+					nextMessage 			= message.text.indexOf("next") > -1 && message.user === taID,
+					helpMessage 			= message.text.indexOf("help") > -1,
+					clearQueueMessage = message.text.indexOf("clear queue") > -1 && message.user === taID;
+
 			if (statusMessage) {
 				bot.sendMessage(message.channel, prettyQueue());
 
