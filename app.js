@@ -1,9 +1,6 @@
 var request = require('request');
 var slackbot = require('./slackbot-new');
-var xml2js = require('xml2js');
 var fs = require('fs');
-
-var xmlParser = new xml2js.Parser();
 
 var botKey = process.env.SLACK_BOT_KEY;
 var taID = process.env.SLACK_USER_ID;
