@@ -95,7 +95,7 @@ slackbot.prototype.connect = function() {
       if (data.ok === false) {
         console.error('Error connecting to slack: ' + data.error + '\n'
                     + 'botKey: ' + self.token + '\n'
-                    + 'botKey: ' + self.token);
+                    + 'selfData: ' + JSON.stringify(self.selfData));
         return;
       };
       self.selfData = data.self;
