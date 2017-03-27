@@ -2,15 +2,15 @@ var request = require('request');
 var slackbot = require('./slackbot-new');
 var fs = require('fs');
 
-var botKey = process.env.SLACK_BOT_KEY;
-var taID = process.env.SLACK_USER_ID;
+var botKey = "xoxb-159703536768-pd7LMDEykTZER5m5PN6bh7gD";
+var taIDs = "U361Q3GPP,U2JU26MPS".split(",");
 
 var bot = new slackbot(botKey);
 
-var dianabot = require('./core-bot-functions')(bot, taID);
-var easterEggs = require('./easter-eggs')(bot, taID);
+var gracehopper = require('./core-bot-functions')(bot, taIDs);
+var easterEggs = require('./easter-eggs')(bot, taIDs);
 
-bot.use(dianabot);
+bot.use(gracehopper);
 
 for (var key in easterEggs) {
 	bot.use(easterEggs[key]);
