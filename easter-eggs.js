@@ -61,9 +61,22 @@ module.exports = function(bot, taID) {
 		cb(null, 'trainStatus');
 	};
 
+  var floorMessage = function(message, cb) {
+    if (validate(message)) {
+      var command = paramify(message);
+      if ((command[0] === "I" || command[0] === "i") && command[1] === "am" && command[3] === "on" && command[4] === "the" && command[6] === "floor") {
+        var floorNumber = command[5];
+        var currentTA = data.user;
+        var botMessage = currentTA.profile.real_name + "is on the " floorNumber + "rd floor";
+      }
+      bot.sendMessage(message.channel, botMessage);
+    }
+  }
+
 	return {
 		kyleSmile: kyleSmile,
-		trainStatus: trainStatus
+		trainStatus: trainStatus,
+    floorMessage: floorMessage
 	};
 
 }; // module.exports
