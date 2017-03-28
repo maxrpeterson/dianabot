@@ -64,13 +64,13 @@ module.exports = function(bot, taID) {
   var floorMessage = function(message, cb) {
     if (validate(message)) {
       var command = paramify(message);
-      if ((command[0] === "I" || command[0] === "i") && command[1] === "am" && command[3] === "on" && command[4] === "the" && command[6] === "floor") {
-        var floorNumber = command[5];
-        var currentTA = data.user;
-        var botMessage = currentTA.profile.real_name + "is on the " floorNumber + "rd floor";
+      if ((command[0] === "I" || command[0] === "i") && command[1] === "am" && command[2] === "on" && command[3] === "the" && command[5] === "floor") {
+        var floorNumber = command[4];
+        var botMessage =  "The TAs are on the " + floorNumber + " floor today";
       }
       bot.sendMessage(message.channel, botMessage);
     }
+    cb(null, 'floorMessage');
   }
 
 	return {
