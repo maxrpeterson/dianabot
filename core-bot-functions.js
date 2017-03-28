@@ -67,11 +67,11 @@ module.exports = function(bot, taIDs) {
         var currentStudent = queue.shift();
         if (currentStudent) {
           bot.api("users.info", {user: message.user}, function(data) {
-    console.log("message", message);
-    console.log("nextMessage firing: ",data);
-    console.log("current Student: ", currentStudent);
+          console.log("message", message);
+          console.log("nextMessage firing: ", data);
+          console.log("current Student: ", currentStudent);
             var currentTA = data.user;
-    console.log("currentTA: ", currentTA)
+            console.log("currentTA: ", currentTA)
             bot.sendMessage(message.channel, "Up now with " + currentTA.profile.real_name + ": <@" + currentStudent.id + "> -- " + prettyQueue());
             backup(queue);
           });
