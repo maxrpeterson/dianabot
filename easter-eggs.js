@@ -49,9 +49,9 @@ module.exports = function(bot, taID) {
 						});
 						var botMessage;
 						if (lineQueried[0].status[0] === 'GOOD SERVICE') { // ? "Nope" : "Yep";
-							botMessage = Math.random() < 0.5 ? 'Nope' : 'Nah';
+							botMessage = Math.random() < 0.5 ? `Nope, the ${trainLineQuery} is fine` : `Nah, the ${trainLineQuery} is fine`;
 						} else {
-							botMessage = 'Yep';
+							botMessage = `Yep, the ${trainLineQuery} is totally fucked`;
 						}
 						bot.sendMessage(message.channel, botMessage);
 					});
@@ -101,8 +101,10 @@ module.exports = function(bot, taID) {
     if (validate(message)) {
       //could randomize emojis here
       var command = paramify(message);
-      if ((command[0] === "Thanks!" || command[0] === "thanks!") || ((command[0] === "Thank" || command[0] === "thank") && command[1] === "you")) {
+      if (command[0] === "Thanks!" || command[0] === "thanks!") {
         var botMessage =  "You're very welcome :panda:";
+      } else if ((command[0] === "Thank" || command[0] === "thank") && command[1] === "you") {
+        var botMessage =  "You're very welcome :bluesteel:";
       }
       bot.sendMessage(message.channel, botMessage);
     }

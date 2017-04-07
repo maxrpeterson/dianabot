@@ -36,7 +36,8 @@ module.exports = function(bot, taIDs) {
           nextMessage       = message.text.indexOf("next") > -1 && taIDs.includes(message.user),
           helpMessage       = message.text.indexOf("help") > -1,
           clearQueueMessage = message.text.indexOf("clear queue") > -1 && taIDs.includes(message.user),
-          easterEggs        = message.text.indexOf("easter eggs") > -1;
+          easterEggs        = message.text.indexOf("easter eggs") > -1,
+          goodnight         = message.text.indexOf("goodnight") > -1;
 
       if (statusMessage) {
         bot.sendMessage(message.channel, prettyQueue());
@@ -80,6 +81,8 @@ module.exports = function(bot, taIDs) {
 
       } else if (easterEggs) {
         bot.sendMessage(message.channel, "Tag me and try these commands: `Do you like me?`, `What is your favorite thing?`, `is the (train line) fucked?`. And if you dig what I'm saying, just say `Thanks!` :smile:")
+      } else if (goodnight) {
+        bot.sendMessage(message.channel, "Have a goodnight!")
       } else if (helpMessage) {
         // help message
         bot.sendMessage(message.channel, "All commands work only when you specifically mention me. Type `queue me` or `q me` to queue yourself and `status` to check current queue. Type `remove me` to remove yourself.")
