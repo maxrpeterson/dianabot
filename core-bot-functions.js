@@ -36,7 +36,6 @@ module.exports = function(bot, taIDs) {
           nextMessage       = message.text.indexOf("next") > -1 && taIDs.includes(message.user),
           helpMessage       = message.text.indexOf("help") > -1,
           clearQueueMessage = message.text.indexOf("clear queue") > -1 && taIDs.includes(message.user);
-          floorMessage      = message.text.indexOf("floor") > -1 && taIDs.includes(message.user);
 
       if (statusMessage) {
         bot.sendMessage(message.channel, prettyQueue());
