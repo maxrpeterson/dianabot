@@ -90,7 +90,7 @@ module.exports = function(bot, taID) {
       let answers = ["Kinda", "Of course!", "Eh", "Sometimes", "To be honest, not really", "Very much!", "You're the best!", "Oh yea! If you were a pen, you'd be FINE point", "You know it!", "If you were a contract, you'd be all FINE print", "Well, you're ok", "Depends... do YOU like ME?", "Like, more than a friend?", "Marry me!"]
       var command = paramify(message);
       if ((command[0] === "Do" || command[0] === "do") && command[1] === "you" && command[2] === "like" && command[3] === "me?") {
-        var botMessage =  answers[Math.floor(Math.random() * answers.length - 1)];
+        var botMessage =  answers[Math.floor(Math.random() * answers.length)];
       }
       bot.sendMessage(message.channel, botMessage);
     }
