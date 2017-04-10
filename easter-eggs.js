@@ -49,9 +49,9 @@ module.exports = function(bot, taID) {
 						});
 						var botMessage;
 						if (lineQueried[0].status[0] === 'GOOD SERVICE') { // ? "Nope" : "Yep";
-							botMessage = Math.random() < 0.5 ? 'Nope' : 'Nah';
+							botMessage = Math.random() < 0.5 ? `Nope, the ${trainLineQuery} is fine` : `Nah, the ${trainLineQuery} is fine`;
 						} else {
-							botMessage = 'Yep';
+							botMessage = `Yep, the ${trainLineQuery} is totally fucked`;
 						}
 						bot.sendMessage(message.channel, botMessage);
 					});
@@ -61,9 +61,63 @@ module.exports = function(bot, taID) {
 		cb(null, 'trainStatus');
 	};
 
+  var floorMessage = function(message, cb) {
+    if (validate(message)) {
+      var command = paramify(message);
+      if ((command[0] === "I" || command[0] === "i") && command[1] === "am" && command[2] === "on" && command[3] === "the" && command[5] === "floor") {
+        var floorNumber = command[4];
+        var botMessage =  "The TAs are on the " + floorNumber + " floor today";
+      }
+      bot.sendMessage(message.channel, botMessage);
+    }
+    cb(null, 'floorMessage');
+  }
+
+  var favoriteThings = function(message, cb) {
+    if (validate(message)) {
+      let favoriteArray = ["And video games, that new Zelda is dope!", "And Dippin' Dots, the ice cream of astronauts!", "And algorithms, I'm a genius in case you didn't know!", "And eqaulity, our similarities are more powerful than our differences!", "And black and white cookies, the embodiment of racial harmony in cookie form. Look to the cookie!"]
+      var command = paramify(message);
+      if ((command[0] === "What" || command[0] === "what") && command[1] === "is" && command[2] === "your" && command[3] === "favorite" && command[4] === "thing?") {
+        var botMessage =  "Seeing the students faces in their profile pictures! ..." + favoriteArray[Math.floor(Math.random() * favoriteArray.length)];
+      }
+      bot.sendMessage(message.channel, botMessage);
+    }
+    cb(null, 'favoriteThings');
+  }
+
+  var doYouLike = function(message, cb) {
+    if (validate(message)) {
+      let answers = ["Kinda", "Of course!", "Eh", "Sometimes", "To be honest, not really", "Very much!", "You're the best!", "Oh yea! If you were a pen, you'd be FINE point", "You know it!", "If you were a contract, you'd be all FINE print", "Well, you're ok", "Depends... do YOU like ME?", "Like, more than a friend?", "Marry me!"]
+      var command = paramify(message);
+      if ((command[0] === "Do" || command[0] === "do") && command[1] === "you" && command[2] === "like" && command[3] === "me?") {
+        var botMessage =  answers[Math.floor(Math.random() * answers.length)];
+      }
+      bot.sendMessage(message.channel, botMessage);
+    }
+    cb(null, 'doYouLike');
+  }
+
+  var thanks = function(message, cb) {
+    if (validate(message)) {
+      //could randomize emojis here
+      var command = paramify(message);
+      if (command[0] === "Thanks!" || command[0] === "thanks!") {
+        var botMessage =  "You're very welcome :panda:";
+      } else if ((command[0] === "Thank" || command[0] === "thank") && command[1] === "you") {
+        var botMessage =  "You're very welcome :bluesteel:";
+      }
+      bot.sendMessage(message.channel, botMessage);
+    }
+    cb(null, 'thanks');
+  }
+
 	return {
 		kyleSmile: kyleSmile,
-		trainStatus: trainStatus
+		trainStatus: trainStatus,
+    floorMessage: floorMessage,
+    favoriteThings: favoriteThings,
+    doYouLike: doYouLike,
+    thanks: thanks
 	};
 
 }; // module.exports
