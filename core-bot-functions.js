@@ -80,7 +80,7 @@ module.exports = function(bot, taIDs) {
         }
 
       } else if (easterEggs) {
-        bot.sendMessage(message.channel, "Tag me and try these commands: `Do you like me?`, `What is your favorite thing?`, `is the (train line) fucked?`. And if you dig what I'm saying, just say `Thanks!` :smile:")
+        bot.sendMessage(message.channel, "Tag me and try these commands: `Do you like me?`, `What is your favorite thing?`, `is the (train line) fucked?`. `Tell me about the Dom.`, `Grace are you up?`. And if you dig what I'm saying, just say `Thanks!` :smile:")
       } else if (goodnight) {
         bot.sendMessage(message.channel, "Have a goodnight!")
       } else if (helpMessage) {
